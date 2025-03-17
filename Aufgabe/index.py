@@ -1,5 +1,6 @@
 import yaml
 from smtplib import SMTP
+from auth_functions import auth_plain, auth_login, auth_cram_md5, auth_digest_md5, auth_oauth, auth_gssapi, auth_ntlm
 
 # Import config file
 with open('./Aufgabe/config.yaml', 'r') as config:
@@ -19,26 +20,27 @@ try:
         # TLS-Handshake and Ehlo
         smtp.starttls()
         smtp.ehlo()
-        
+
+        # Requesting supported auth methods which are return in a dictionary.
+        supported_auth_methods = list(dict.fromkeys(smtp.esmtp_features.get("auth").split()))
+        print(f"Supported authentication methods: {supported_auth_methods}")
+
+        for auth_method in supported_auth_methods:
+            match auth_method:
+                case 'PLAIN':
+                    auth_plain(smtp)
+                case 'LOGIN':
+                    auth_login(smtp)
+                case 'CRAM-MD5':
+                    auth_cram_md5(smtp)
+                case 'DIGEST-MD5':
+                    auth_digest_md5()
+                case 'OAUTH':
+                    auth_oauth()
+                case 'GSSAPI':
+                    auth_gssapi()
+                case 'NTLM':
+                    auth_ntlm()
+
 except:
     print(f'Something went wrong while trying to establish a connection to the SMTP server! SMTP-Server: {smtp_server}, Port: {port} ')
-
-#Requesting supported auth methods which are return in a dictionary.
-supported_auth_methods = list(dict.fromkeys(smtp.esmtp_features.get("auth").split()))
-print(f"Supported authentication methods: {supported_auth_methods}")
-
-smtp.connect()
-response_plain = smtp.auth('PLAIN',smtp.auth_plain)
-print(response_plain)
-smtp.close()
-
-smtp.connect()
-response_login = smtp.auth('LOGIN', smtp.auth_login)
-print(response_login)
-smtp.close()
-
-smtp.connect()
-response_cram_md5 = smtp.auth('CRAM-MD5', smtp.auth_cram_md5)
-print(response_cram_md5)
-smtp.close()
-
