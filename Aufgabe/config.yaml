@@ -1,9 +1,7 @@
 # SMTP-Config
-
 port: 25
 smtp_server: '127.0.0.1'
 
 # Login details
-
 username: admin123
 password: admin123

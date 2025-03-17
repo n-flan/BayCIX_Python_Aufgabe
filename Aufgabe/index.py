@@ -17,36 +17,43 @@ try:
         
         logger.info(f'Connected with SMTP-Server: {smtp_server}')
         
-        # Setting username and password
+        # Checking if server supports TLS
+        smtp.ehlo()
+        if smtp.has_extn("STARTTLS"):
+            logger.info('Server supports TLS extension.')
+            smtp.starttls
+        else:
+            logger.warning('Server does not TLS extension!')
+            
+        # Setting username and password AFTER activating TLS, if possible
         smtp.user = username
         smtp.password = password
-        
-        # TLS-Handshake and Ehlo
-        smtp.starttls()
-        smtp.ehlo()
 
         # Requesting supported auth methods which are return in a dictionary.
-        supported_auth_methods = list(dict.fromkeys(smtp.esmtp_features.get("auth").split()))
-        logger.info(f"Supported authentication methods: {supported_auth_methods}")
+        supported_auth_methods = list(dict.fromkeys(smtp.esmtp_features.get("auth", "").split()))
+        
+        if supported_auth_methods:
+            logger.info(f"Supported authentication methods: {supported_auth_methods}")
 
-        # Iterate through each supported authentication method to test functionality
-        logger.info(f'Testing the following auth methods that were returned from SMTP server: {supported_auth_methods}')
-        for auth_method in supported_auth_methods:
-            match auth_method:
-                case 'PLAIN':
-                    auth_plain(smtp)
-                case 'LOGIN':
-                    auth_login(smtp)
-                case 'CRAM-MD5':
-                    auth_cram_md5(smtp)
-                case 'DIGEST-MD5':
-                    auth_digest_md5()
-                case 'OAUTH':
-                    auth_oauth()
-                case 'GSSAPI':
-                    auth_gssapi()
-                case 'NTLM':
-                    auth_ntlm()
-
-except:
-    logger.error(f'Something went wrong while trying to establish a connection to the SMTP server! SMTP-Server: {smtp_server}, Port: {port} ')
+            # Iterate through each supported authentication method to test functionality
+            logger.info(f'Testing the following auth methods that were returned from SMTP server: {supported_auth_methods}')
+            for auth_method in supported_auth_methods:
+                match auth_method:
+                    case 'PLAIN':
+                        auth_plain(smtp)
+                    case 'LOGIN':
+                        auth_login(smtp)
+                    case 'CRAM-MD5':
+                        auth_cram_md5(smtp)
+                    case 'DIGEST-MD5':
+                        auth_digest_md5()
+                    case 'OAUTH':
+                        auth_oauth()
+                    case 'GSSAPI':
+                        auth_gssapi()
+                    case 'NTLM':
+                        auth_ntlm()
+        else:
+            logger.warning(f'No auth methods are supported by this smtp server! Servername: {smtp_server}')
+except Exception as e:
+    logger.error(f'Something went wrong | Exception: {e} ')
