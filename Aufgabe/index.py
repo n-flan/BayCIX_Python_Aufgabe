@@ -21,9 +21,12 @@ try:
         smtp.ehlo()
         if smtp.has_extn("STARTTLS"):
             logger.info('Server supports TLS extension.')
-            smtp.starttls
+            smtp.starttls()
+            logger.info('TLS activated.')
         else:
-            logger.warning('Server does not TLS extension!')
+            logger.warning('Server does not support TLS extension!')
+            
+        smtp.ehlo()    
             
         # Setting username and password AFTER activating TLS, if possible
         smtp.user = username
