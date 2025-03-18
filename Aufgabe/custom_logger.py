@@ -7,7 +7,7 @@ logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
 # Create a file handler to write logs to a file
-file_handler = logging.FileHandler('app.log')
+file_handler = logging.FileHandler('./Aufgabe/logs/app.log')
 file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(formatter)
 
