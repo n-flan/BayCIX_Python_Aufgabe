@@ -1,11 +1,11 @@
 # SMTP-Config #### #### #### #### #### #### ####
-smtp_server: '127.0.0.1'
-port: 2525
-username: admin123
-password: admin1234
+# smtp_server: '127.0.0.1'
+# port: 2525
+# username: admin123
+# password: admin1234
 ###################
-# smtp_server: 'mail-01.baycix.net'
-# port: 587
-# username: pytest@bxtest.de
-# password: gHg3575g!
+smtp_server: 'mail-01.baycix.net'
+port: 587
+username: pytest@bxtest.de
+password: gHg3575g!
 ###################
