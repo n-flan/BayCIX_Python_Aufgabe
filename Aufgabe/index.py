@@ -38,7 +38,7 @@ def connect_smtp(smtp):
     smtp.user = username
     smtp.password = password
     
-# This function simpley disconnects from the server in order to be able to reauthenticate again.
+# This function simply disconnects from the server in order to be able to reauthenticate again.
 def disconnect_smtp(smtp):
     smtp.close()
     logger.debug(f'SMTP-Server {smtp_server} disconnected.')
@@ -70,15 +70,6 @@ try:
                         connect_smtp(smtp)
                         auth_cram_md5(smtp)
                         disconnect_smtp(smtp)
-                        
-                    # case 'DIGEST-MD5':
-                    #     auth_digest_md5()
-                    # case 'OAUTH':
-                    #     auth_oauth()
-                    # case 'GSSAPI':
-                    #     auth_gssapi()
-                    # case 'NTLM':
-                    #     auth_ntlm()
         else:
             logger.warning(f'No auth methods are supported by this smtp server! Server ({smtp_server}) returned: {supported_auth_methods}')
 except Exception as e:

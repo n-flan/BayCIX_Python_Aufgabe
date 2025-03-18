@@ -24,19 +24,3 @@ def auth_cram_md5(smtp: smtplib.SMTP):
         logger.info('Testing method CRAM-MD5 succeeded')
     except Exception as e:
         logger.error(f'Testing method CRAM-MD5 failed. Exception: {e}')
-
-# def auth_digest_md5():
-#     logger.info('Testing method DIGEST-MD5')
-#     print('This function is not implemented yet.')
-    
-# def auth_oauth():
-#     logger.info('Testing method OAUTH')
-#     print('This function is not implemented yet.')
-    
-# def auth_gssapi():
-#     logger.info('Testing method GSSAPI')
-#     print('This function is not implemented yet.')
-    
-# def auth_ntlm():
-#     logger.info('Testing method NTLM')
-#     print('This function is not implemented yet.')
