@@ -1,6 +1,6 @@
 # SMTP-Config
-# smtp_server: '127.0.0.1'
-# port: 25
+smtp_server: '127.0.0.1'
+port: 25
 
 # smtp_server: 'smtp.gmail.com'
 # port: 587
@@ -8,9 +8,9 @@
 # smtp_server: smtp.freesmtpservers.com
 # port: 25
 
-smtp_server: smtp.office365.com
-port: 586
+# smtp_server: smtp.office365.com
+# port: 586
 
 # Login details
 username: admin123
-password: admin123
+password: admin1234

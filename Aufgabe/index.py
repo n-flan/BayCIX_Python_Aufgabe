@@ -15,6 +15,8 @@ password = data.get('password')
 try:
     with SMTP(smtp_server, port) as smtp:
         
+        smtp.set_debuglevel(1)
+        
         logger.info(f'Connected with SMTP-Server: {smtp_server}')
         
         # Checking if server supports TLS
